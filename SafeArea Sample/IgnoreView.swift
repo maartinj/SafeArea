@@ -9,12 +9,33 @@
 // Subscribe on YouTube: https://youTube.com/@StewartLynch
 // Buy me a ko-fi:  https://ko-fi.com/StewartLynch
 
+// Link: https://www.youtube.com/watch?v=ccvWZ-bG_3Y&ab_channel=StewartLynch
+
 
 import SwiftUI
 
 struct IgnoreView: View {
+    @State private var textEntry = ""
     var body: some View {
-        Color.red
+        TabView {
+            NavigationStack {
+                ZStack {
+                    Color.red
+                        .overlay(alignment: .bottom) {
+                            Text("Bottom")
+                        }
+                        .ignoresSafeArea(edges: .horizontal)
+                        .navigationTitle("SafeAreas")
+                    TextField("Text Entry", text: $textEntry)
+                        .textFieldStyle(.roundedBorder)
+                        .padding()
+                }
+                .ignoresSafeArea(.keyboard, edges: .bottom)
+            }
+            .tabItem {
+                Label("First", systemImage: "1.circle.fill")
+            }
+        }
     }
 }
 
