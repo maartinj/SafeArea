@@ -35,6 +35,10 @@ struct IgnoreView: View {
             .tabItem {
                 Label("First", systemImage: "1.circle.fill")
             }
+            InsetsView()
+                .tabItem {
+                    Label("Second", systemImage: "2.circle.fill")
+                }
         }
     }
 }

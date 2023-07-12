@@ -14,11 +14,36 @@ import SwiftUI
 
 struct InsetsView: View {
     @State private var todos: [String] = Array(repeating: "Todo", count: 50).enumerated().map {"\($1) \($0)"}
+    @State private var newToDo = ""
         var body: some View {
-            List(todos, id: \.self) { todo in
-                Text(todo)
+            NavigationStack {
+                ScrollViewReader { proxy in
+                    List(todos.indices, id: \.self) { index in
+                        Text(todos[index])
+                            .id(index)
+                    }
+                    .listStyle(.plain)
+                    .navigationTitle("Insets")
+                    .safeAreaInset(edge: .bottom) {
+                        HStack {
+                            TextField("New ToDo", text: $newToDo)
+                                .textFieldStyle(.roundedBorder)
+                            Button("OK") {
+                                todos.insert(newToDo, at: 0)
+                                newToDo = ""
+                                withAnimation {
+                                    proxy.scrollTo(0)
+                                }
+                            }
+                            .disabled(newToDo.isEmpty)
+                            .buttonStyle(.borderedProminent)
+                        }
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background()
+                }
             }
-            .listStyle(.plain)
         }
 }
 
